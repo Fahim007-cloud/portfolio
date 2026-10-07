@@ -25,37 +25,61 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================
    DESIGN TOKENS
    ============================================ */
 :root{
-  /* color */
-  --bg:#F4F8F5;
-  --bg-alt:#EBF2ED;
+  /* color — monochrome (black / white / neutral grey, no hue) */
+  --bg:#FFFFFF;
+  --bg-alt:#F5F5F5;
   --surface:#FFFFFF;
-  --surface-glass:rgba(255,255,255,0.66);
-  --ink:#101A15;
-  --ink-soft:#46554C;
-  --ink-faint:#7E9186;
-  --line:#DCE7E0;
-  --indigo:#059669;
-  --indigo-2:#10B981;
-  --violet:#34D399;
-  --teal:#0D9488;
-  --amber:#F0A93A;
-  --danger:#E0525C;
-  --success:#10B981;
+  --surface-glass:rgba(255,255,255,0.72);
+  --ink:#0A0A0A;
+  --ink-soft:#525252;
+  --ink-faint:#767676; /* 4.5:1 on white — small labels stay AA */
+  --line:#E4E4E4;
+  /* accent names kept (referenced ~40x in the sheet); all now greyscale */
+  --indigo:#0A0A0A;
+  --indigo-2:#262626;
+  --violet:#404040;
+  --teal:#333333;
+  --amber:#5C5C5C;
+  --danger:#0A0A0A;
+  --success:#0A0A0A;
 
-  --grad-brand: linear-gradient(135deg,#047857 0%,#10B981 55%,#34D399 120%);
-  --grad-soft: linear-gradient(160deg, rgba(5,150,105,0.10), rgba(13,148,136,0.08));
+  --grad-brand: linear-gradient(135deg,#0A0A0A 0%,#262626 55%,#3D3D3D 120%);
+  --grad-soft: linear-gradient(160deg, rgba(10,10,10,0.055), rgba(10,10,10,0.02));
+
+  /* translucent washes, decorative blobs, pulse ring */
+  --tint-1: rgba(10,10,10,0.05);
+  --tint-2: rgba(10,10,10,0.10);
+  --blob-a: rgba(10,10,10,0.30);
+  --blob-b: rgba(10,10,10,0.22);
+  --pulse: rgba(10,10,10,0.45);
+  --on-brand:#FFFFFF;   /* text on the accent (dark in light theme) */
+  --on-inverse:#FFFFFF; /* text on always-dark blocks (footer, resume CTA) */
+
+  /* Code-window syntax colours — the one deliberate splash of hue. The card is
+     dark in both themes, so this single palette covers light and dark. */
+  --code-key:#C792EA;   /* const / function / return */
+  --code-fn:#82AAFF;    /* function name */
+  --code-prop:#7FDBFF;  /* object keys */
+  --code-str:#9ECE6A;   /* string values */
+  --code-bool:#FF9E64;  /* booleans */
+  --code-com:#6E6E6E;   /* comments */
+  --code-dot-r:#FF5F57; /* window chrome: classic traffic lights */
+  --code-dot-y:#FEBC2E;
+  --code-dot-g:#28C840;
 
   /* type */
   --font-display:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body:'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono:'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+  /* micro-labels, tags, dates and code chrome use a normal (non-monospace)
+     face — Inter is already loaded for headings, so no extra font family */
+  --font-label:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* radius */
   --r-sm:10px;
@@ -64,9 +88,9 @@
   --r-xl:28px;
 
   /* shadow */
-  --shadow-sm: 0 2px 10px rgba(20,20,50,0.05);
-  --shadow-md: 0 10px 30px rgba(30,30,70,0.08);
-  --shadow-lg: 0 24px 60px rgba(30,30,70,0.12);
+  --shadow-sm: 0 2px 10px rgba(0,0,0,0.05);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.07);
+  --shadow-lg: 0 24px 60px rgba(0,0,0,0.10);
 
   --nav-h:76px;
   --container:1180px;
@@ -74,28 +98,45 @@
 
   /* surfaces (used by elements that hardcode #fff) */
   --white:#FFFFFF;
-  --hover-line:#C5DAD0;
-  --surface-inverse:#0C1512; /* dark accent blocks (footer, resume CTA) */
+  --hover-line:#C9C9C9;
+  --surface-inverse:#0A0A0A; /* dark accent blocks (footer, resume CTA) */
 }
 
 /* ============================================
    DARK THEME
    ============================================ */
 html[data-theme="dark"]{
-  --bg:#0A110E;
-  --bg-alt:#0F1814;
-  --surface:#111D18;
-  --surface-glass:rgba(17,29,24,0.66);
-  --ink:#EAF2EC;
-  --ink-soft:#9FB5A8;
-  --ink-faint:#5F7A6D;
-  --line:#23352C;
+  --bg:#000000;
+  --bg-alt:#0B0B0B;
+  --surface:#141414;
+  --surface-glass:rgba(0,0,0,0.72);
+  --ink:#FAFAFA;
+  --ink-soft:#A6A6A6;
+  --ink-faint:#8A8A8A; /* 5.3:1 on black — small labels stay AA */
+  --line:#262626;
 
-  --grad-soft: linear-gradient(160deg, rgba(16,185,129,0.16), rgba(13,148,136,0.12));
+  --indigo:#FAFAFA;
+  --indigo-2:#D4D4D4;
+  --violet:#A3A3A3;
+  --teal:#A3A3A3;
+  --amber:#A3A3A3;
+  --danger:#FAFAFA;
+  --success:#FAFAFA;
 
-  --white:#111D18;
-  --hover-line:#2C4438;
-  --surface-inverse:#111D18;
+  --grad-brand: linear-gradient(135deg,#FFFFFF 0%,#D4D4D4 55%,#A3A3A3 120%);
+  --grad-soft: linear-gradient(160deg, rgba(255,255,255,0.075), rgba(255,255,255,0.03));
+
+  --tint-1: rgba(255,255,255,0.08);
+  --tint-2: rgba(255,255,255,0.14);
+  --blob-a: rgba(255,255,255,0.14);
+  --blob-b: rgba(255,255,255,0.10);
+  --pulse: rgba(255,255,255,0.45);
+  --on-brand:#0A0A0A;   /* the accent is light in dark theme → black text */
+  --on-inverse:#FFFFFF;
+
+  --white:#141414;
+  --hover-line:#3D3D3D;
+  --surface-inverse:#141414;
 
   --shadow-sm: 0 2px 10px rgba(0,0,0,0.35);
   --shadow-md: 0 10px 30px rgba(0,0,0,0.45);
@@ -108,55 +149,67 @@ body, .edu-card, .contact-form{
 }
 
 /* Dark-mode fixes for hardcoded light colors */
-html[data-theme="dark"] .navbar.scrolled{ background:rgba(10,17,14,0.78); }
+html[data-theme="dark"] .navbar.scrolled{ background:rgba(0,0,0,0.72); }
 html[data-theme="dark"] .btn.secondary:hover{ background:var(--surface); }
 html[data-theme="dark"] .skill-chip:hover{ background:var(--surface); }
 html[data-theme="dark"] .field input:focus{ background:var(--surface); }
 html[data-theme="dark"] .resume-preview-frame{ background:#fff; }
-html[data-theme="dark"] .resume-preview-badge{ background:#fff; color:#12131A; }
-.modal-close{ color:#12131A; }
+html[data-theme="dark"] .resume-preview-badge{ background:#fff; color:#0A0A0A; }
+.modal-close{ color:#0A0A0A; }
+
+/* Mockup labels follow the site's label face. The modal renders a runtime
+   clone of a card SVG outside .project-media, so it must be listed too. */
+.project-media svg text,
+.modal-media svg text{ font-family:var(--font-label); }
 
 /* Project mockup illustrations adapt to theme via CSS vars */
 .project-media svg .svg-card,
 .project-media svg .svg-panel{ fill:var(--white); }
-.project-media svg .svg-panel-dark{ fill:#0F1A16; }
-.project-media svg .svg-line-strong{ fill:#3A3D4D; }
-.project-media svg .svg-line-soft{ fill:#C9CBDD; }
-html[data-theme="dark"] .project-media svg .svg-panel-dark{ fill:#1A2B24; }
-html[data-theme="dark"] .project-media svg .svg-line-strong{ fill:#A8CDB8; }
-html[data-theme="dark"] .project-media svg .svg-line-soft{ fill:#2F4A3D; }
+.project-media svg .svg-panel-dark{ fill:#0A0A0A; }
+.project-media svg .svg-line-strong{ fill:#383838; }
+.project-media svg .svg-line-soft{ fill:#C9C9C9; }
+/* semantic status text in the mockups: green = ok / paid / online */
+.project-media svg .svg-status-text{ fill:#047857; }
+html[data-theme="dark"] .project-media svg .svg-panel-dark{ fill:#1F1F1F; }
+html[data-theme="dark"] .project-media svg .svg-line-strong{ fill:#B0B0B0; }
+html[data-theme="dark"] .project-media svg .svg-line-soft{ fill:#333333; }
 html[data-theme="dark"] .project-media svg .svg-card{ fill:var(--surface); }
-html[data-theme="dark"] .project-media svg .svg-panel{ fill:#13231C; }
-html[data-theme="dark"] .project-media svg .svg-bg{ fill:#13231C; }
-html[data-theme="dark"] .project-media svg .svg-chip-bg{ fill:#1D3129; }
-html[data-theme="dark"] .project-media svg .svg-badge-green{ fill:rgba(31,169,113,0.18); }
-html[data-theme="dark"] .project-media svg .svg-badge-red{ fill:rgba(224,82,92,0.18); }
-html[data-theme="dark"] .project-media svg .svg-text-ink{ fill:#EDEEF6; }
+html[data-theme="dark"] .project-media svg .svg-panel{ fill:#1A1A1A; }
+html[data-theme="dark"] .project-media svg .svg-bg{ fill:#111111; }
+html[data-theme="dark"] .project-media svg .svg-chip-bg{ fill:#1F1F1F; }
+html[data-theme="dark"] .project-media svg .svg-badge-green{ fill:rgba(16,185,129,0.22); }
+html[data-theme="dark"] .project-media svg .svg-badge-red{ fill:rgba(224,82,92,0.24); }
+html[data-theme="dark"] .project-media svg .svg-status-text{ fill:#34D399; }
+html[data-theme="dark"] .project-media svg .svg-text-ink{ fill:#F5F5F5; }
 html[data-theme="dark"] .project-media svg .svg-window-bar{ fill:rgba(255,255,255,0.08); }
+/* each mockup keeps its own hue as a deep tint on dark cards */
+html[data-theme="dark"] .project-card[data-project="attendance"] .project-media svg .svg-bg{ fill:#0E1626; }
+html[data-theme="dark"] .project-card[data-project="inventory"] .project-media svg .svg-bg{ fill:#1C1509; }
+html[data-theme="dark"] .project-card[data-project="quran"] .project-media svg .svg-bg{ fill:#06170F; }
+html[data-theme="dark"] .project-card[data-project="outagemap"] .project-media svg .svg-bg{ fill:#0E1024; }
 /* keep grey label text readable on dark panels */
-html[data-theme="dark"] .project-media svg text[fill="#8B8EA0"]{ fill:#7E9B8D; }
-html[data-theme="dark"] .tech-tag{ background:rgba(16,185,129,0.16); color:#6EE7B7; }
-html[data-theme="dark"] .eyebrow{ color:#6EE7B7; }
-/* brighter indigo for text/icons on dark surfaces */
+html[data-theme="dark"] .project-media svg text[fill="#8A8A8A"]{ fill:#9A9A9A; }
+html[data-theme="dark"] .tech-tag{ background:var(--tint-1); color:var(--ink); }
+html[data-theme="dark"] .eyebrow{ color:var(--ink); }
+/* Accent text/icons resolve straight from the greyscale tokens in dark mode
+   (--indigo/--teal/--amber are light there), so no per-component override is
+   needed for the eyebrow, hero-hi, card labels, chips or timeline dots. */
 html[data-theme="dark"] .nav-links a.active,
 html[data-theme="dark"] .btn.ghost,
 html[data-theme="dark"] .icon-link:hover,
 html[data-theme="dark"] .skill-cat-icon,
 html[data-theme="dark"] .achieve-icon,
 html[data-theme="dark"] .contact-info-icon,
-html[data-theme="dark"] .edu-card .school{ color:#6EE7B7; }
-html[data-theme="dark"] .icon-link:hover{ border-color:#6EE7B7; }
-html[data-theme="dark"] .icon-link.primary-link{ background:var(--grad-brand); border-color:transparent; color:#fff; }
-html[data-theme="dark"] .icon-link.primary-link:hover{ background:var(--grad-brand); border-color:transparent; color:#fff; box-shadow:0 8px 20px rgba(16,185,129,0.4); }
-/* brighter gradient text + teal accents on dark */
-html[data-theme="dark"] .hero h1 .grad{ background:linear-gradient(135deg,#34D399 0%,#6EE7B7 55%,#2DD4BF 120%); -webkit-background-clip:text; background-clip:text; }
-html[data-theme="dark"] .hero-hi{ color:#5EEAD4; }
-html[data-theme="dark"] .info-card .label,
-html[data-theme="dark"] .achieve-card .sub,
-html[data-theme="dark"] .modal-section h4,
-html[data-theme="dark"] .edu-card .status{ color:#5EEAD4; }
-html[data-theme="dark"] .edu-card .status{ background:rgba(16,185,129,0.14); }
-html[data-theme="dark"] .skill-chip .lvl.working{ color:#5EEAD4; }
+html[data-theme="dark"] .edu-card .school{ color:var(--ink); }
+html[data-theme="dark"] .icon-link:hover{ border-color:var(--ink); }
+/* the accent surface is white in dark mode → its label must flip to black */
+html[data-theme="dark"] .icon-link.primary-link{ background:var(--grad-brand); border-color:transparent; color:var(--on-brand); }
+html[data-theme="dark"] .icon-link.primary-link:hover{ background:var(--grad-brand); border-color:transparent; color:var(--on-brand); box-shadow:0 8px 20px rgba(255,255,255,0.16); }
+/* a white button on black needs a light halo — a black shadow would vanish */
+html[data-theme="dark"] .btn.primary{ box-shadow:0 10px 24px rgba(255,255,255,0.10); }
+html[data-theme="dark"] .btn.primary:hover{ box-shadow:0 16px 32px rgba(255,255,255,0.16); }
+/* keep the dialog separated from a black page */
+html[data-theme="dark"] .modal-overlay{ background:rgba(0,0,0,0.78); }
 
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth; scroll-padding-top: calc(var(--nav-h) + 12px);}
@@ -185,7 +238,6 @@ p{margin:0;}
   border-radius:6px;
 }
 
-.mono{font-family:var(--font-mono);}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
@@ -218,8 +270,8 @@ p{margin:0;}
 }
 .navbar.scrolled{
   background:var(--surface-glass);
-  backdrop-filter:blur(16px) saturate(160%);
-  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
   box-shadow:var(--shadow-sm);
   border-bottom:1px solid var(--line);
 }
@@ -234,9 +286,9 @@ p{margin:0;}
 .logo-mark{
   width:38px; height:38px; border-radius:11px;
   background:var(--grad-brand);
-  color:#fff; display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-mono); font-weight:600; font-size:0.85rem;
-  box-shadow:0 6px 16px rgba(16,185,129,0.35);
+  color:var(--on-brand); display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-label); font-weight:600; font-size:0.85rem;
+  box-shadow:0 6px 16px rgba(0,0,0,0.22);
 }
 .nav-links{
   display:flex; align-items:center; gap:2px;
@@ -249,7 +301,7 @@ p{margin:0;}
   border-radius:99px;
   transition:color .25s var(--ease), background .25s var(--ease);
 }
-.nav-links a:hover{ color:var(--ink); background:rgba(16,185,129,0.07); }
+.nav-links a:hover{ color:var(--ink); background:var(--tint-1); }
 .nav-links a.active{ color:var(--indigo); }
 .nav-links a.active::after{
   content:''; position:absolute; left:16px; right:16px; bottom:3px; height:2px;
@@ -373,10 +425,10 @@ html[data-theme="dark"] .theme-toggle .icon-moon{
   .btn.sm{ min-height:40px; padding:10px 18px; }
 }
 .btn.primary{
-  background:var(--grad-brand); color:#fff;
-  box-shadow:0 10px 24px rgba(5,150,105,0.30);
+  background:var(--grad-brand); color:var(--on-brand);
+  box-shadow:0 10px 24px rgba(0,0,0,0.18);
 }
-.btn.primary:hover{ transform:translateY(-2px); box-shadow:0 16px 32px rgba(5,150,105,0.38); }
+.btn.primary:hover{ transform:translateY(-2px); box-shadow:0 16px 32px rgba(0,0,0,0.26); }
 .btn.secondary{
   background:var(--surface); color:var(--ink);
   border:1.5px solid var(--line);
@@ -397,8 +449,8 @@ section{ padding:120px 0; position:relative; }
 @media (max-width: 480px){ section{ padding:60px 0; } }
 .eyebrow{
   display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-mono); font-size:0.78rem; font-weight:500;
-  color:var(--indigo); background:rgba(5,150,105,0.08);
+  font-family:var(--font-label); font-size:0.78rem; font-weight:500;
+  color:var(--indigo); background:var(--tint-1);
   padding:7px 14px; border-radius:99px; margin-bottom:18px;
   letter-spacing:0.02em;
 }
@@ -425,8 +477,8 @@ section{ padding:120px 0; position:relative; }
   position:absolute; z-index:0; border-radius:50%;
   filter:blur(70px); opacity:0.55; pointer-events:none;
 }
-.hero-blob.b1{ width:460px; height:460px; top:-140px; right:-120px; background:radial-gradient(circle,#10B981,transparent 70%); animation: float1 14s ease-in-out infinite; }
-.hero-blob.b2{ width:360px; height:360px; bottom:-120px; left:-100px; background:radial-gradient(circle,#0D9488,transparent 70%); animation: float2 16s ease-in-out infinite; }
+.hero-blob.b1{ width:460px; height:460px; top:-140px; right:-120px; background:radial-gradient(circle,var(--blob-a),transparent 70%); animation: float1 14s ease-in-out infinite; }
+.hero-blob.b2{ width:360px; height:360px; bottom:-120px; left:-100px; background:radial-gradient(circle,var(--blob-b),transparent 70%); animation: float2 16s ease-in-out infinite; }
 @keyframes float1{ 0%,100%{ transform:translate(0,0);} 50%{ transform:translate(-30px,30px);} }
 @keyframes float2{ 0%,100%{ transform:translate(0,0);} 50%{ transform:translate(24px,-24px);} }
 
@@ -440,13 +492,13 @@ section{ padding:120px 0; position:relative; }
   border:1px solid var(--line); padding:8px 16px; border-radius:99px;
   font-size:0.85rem; font-weight:500; color:var(--ink-soft); margin-bottom:26px;
 }
-.status-dot{ width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 0 0 rgba(31,169,113,0.6); animation:pulse 2s infinite; }
+.status-dot{ width:8px; height:8px; border-radius:50%; background:var(--success); box-shadow:0 0 0 0 var(--pulse); animation:pulse 2s infinite; }
 @keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(31,169,113,0.5);}
-  70%{ box-shadow:0 0 0 8px rgba(31,169,113,0);}
-  100%{ box-shadow:0 0 0 0 rgba(31,169,113,0);}
+  0%{ box-shadow:0 0 0 0 var(--pulse);}
+  70%{ box-shadow:0 0 0 8px transparent;}
+  100%{ box-shadow:0 0 0 0 transparent;}
 }
-.hero-hi{ font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--teal); margin-bottom:14px; display:block; letter-spacing:0.01em; text-shadow:0 0 12px rgba(16,185,129,0.25); }
+.hero-hi{ font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--teal); margin-bottom:14px; display:block; letter-spacing:0.01em; }
 .hero-hi .hi-cursor{ display:inline-block; color:var(--indigo); animation: blink 1s step-end infinite; }
 .hero h1{
   font-size:clamp(2.2rem, 5vw, 3.4rem);
@@ -484,7 +536,7 @@ section{ padding:120px 0; position:relative; }
   .hero-visual{ max-width:100%; }
 }
 .code-window{
-  background:#12211B; border-radius:var(--r-lg);
+  background:#0A0A0A; border-radius:var(--r-lg);
   box-shadow:var(--shadow-lg);
   overflow:hidden;
   border:1px solid rgba(255,255,255,0.06);
@@ -494,22 +546,25 @@ section{ padding:120px 0; position:relative; }
 @keyframes windowFloat{ 0%,100%{ transform:rotate(1.4deg) translateY(0);} 50%{ transform:rotate(1.4deg) translateY(-10px);} }
 .code-titlebar{
   display:flex; align-items:center; gap:8px; padding:14px 18px;
-  background:#16281F; border-bottom:1px solid rgba(255,255,255,0.06);
+  background:#141414; border-bottom:1px solid rgba(255,255,255,0.06);
 }
 .code-dot{ width:11px; height:11px; border-radius:50%; }
-.code-dot.r{ background:#FF5F57; } .code-dot.y{ background:#FEBC2E; } .code-dot.g{ background:#28C840; }
-.code-filename{ margin-left:10px; font-family:var(--font-mono); font-size:0.78rem; color:#8B8FA8; }
-.code-body{ padding:26px 24px 30px; font-family:var(--font-mono); font-size:0.86rem; line-height:1.85; color:#C6D5CC; min-height:230px;}
-.code-body .c-key{ color:#8EE6BC; }
-.code-body .c-str{ color:#5FE3B3; }
-.code-body .c-fn{ color:#F2B85C; }
-.code-body .c-com{ color:#4F7A66; }
-.code-body .cursor{ display:inline-block; width:7px; height:1em; background:#6EE7B7; vertical-align:middle; animation:blink 1s step-end infinite; }
+/* window chrome: classic red / amber / green traffic lights */
+.code-dot.r{ background:var(--code-dot-r); } .code-dot.y{ background:var(--code-dot-y); } .code-dot.g{ background:var(--code-dot-g); }
+.code-filename{ margin-left:10px; font-family:var(--font-label); font-size:0.78rem; color:#8A8A8A; }
+.code-body{ padding:26px 24px 30px; font-family:var(--font-label); font-size:0.86rem; line-height:1.85; color:#D4D4D4; min-height:230px;}
+.code-body .c-key{ color:var(--code-key); }
+.code-body .c-fn{ color:var(--code-fn); }
+.code-body .c-prop{ color:var(--code-prop); }
+.code-body .c-str{ color:var(--code-str); }
+.code-body .c-bool{ color:var(--code-bool); }
+.code-body .c-com{ color:var(--code-com); font-style:italic; }
+.code-body .cursor{ display:inline-block; width:7px; height:1em; background:#FFFFFF; vertical-align:middle; animation:blink 1s step-end infinite; }
 @keyframes blink{ 50%{ opacity:0; } }
 .float-chip{
   position:absolute; background:var(--surface); border:1px solid var(--line);
   border-radius:14px; padding:10px 16px; box-shadow:var(--shadow-md);
-  font-family:var(--font-mono); font-size:0.78rem; display:flex; align-items:center; gap:8px;
+  font-family:var(--font-label); font-size:0.78rem; display:flex; align-items:center; gap:8px;
   animation: chipFloat 5s ease-in-out infinite;
 }
 .float-chip.c1{ top:-18px; left:-24px; animation-delay:0.4s; }
@@ -534,7 +589,7 @@ section{ padding:120px 0; position:relative; }
 }
 .about-card .placeholder-label{
   position:absolute; bottom:16px; left:16px; right:16px;
-  background:rgba(18,19,26,0.75); color:#fff; font-family:var(--font-mono);
+  background:rgba(10,10,10,0.78); color:#fff; font-family:var(--font-label);
   font-size:0.72rem; padding:8px 12px; border-radius:8px; text-align:center;
 }
 .about-card .about-photo{
@@ -548,7 +603,7 @@ section{ padding:120px 0; position:relative; }
 .about-card .about-photo.is-missing{ display:none; }
 .about-card .avatar-fallback{
   width:96px; height:96px; border-radius:50%; background:var(--grad-brand);
-  color:#fff; display:flex; align-items:center; justify-content:center;
+  color:var(--on-brand); display:flex; align-items:center; justify-content:center;
   font-family:var(--font-display); font-size:2.1rem; font-weight:700;
 }
 .about-deco{
@@ -568,7 +623,7 @@ section{ padding:120px 0; position:relative; }
   padding:18px 20px; transition: all .25s var(--ease);
 }
 .info-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-sm); border-color:var(--hover-line); }
-.info-card .label{ font-family:var(--font-mono); font-size:0.72rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.05em; }
+.info-card .label{ font-family:var(--font-label); font-size:0.72rem; color:var(--teal); text-transform:uppercase; letter-spacing:0.05em; }
 .info-card .value{ font-weight:600; margin-top:6px; font-size:0.98rem; }
 
 @media (max-width: 900px){
@@ -602,7 +657,7 @@ section{ padding:120px 0; position:relative; }
 }
 .skill-chip:hover{ background:var(--white); border-color:var(--indigo); transform:translateY(-2px); box-shadow:var(--shadow-sm); }
 .skill-chip .lvl{
-  font-family:var(--font-mono); font-size:0.66rem; color:var(--ink-faint);
+  font-family:var(--font-label); font-size:0.66rem; color:var(--ink-faint);
   padding:2px 7px; border-radius:99px; background:var(--bg-alt);
 }
 .skill-chip .lvl.learning{ color:var(--amber); }
@@ -628,18 +683,14 @@ section{ padding:120px 0; position:relative; }
 }
 .project-media img{ width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease); }
 .project-card:hover .project-media img{ transform:scale(1.06); }
-.project-media .mock-glyph{ font-family:var(--font-mono); color:var(--indigo); font-size:0.8rem; opacity:0.6; }
-.project-media .placeholder-tag{
-  position:absolute; top:12px; left:12px; background:rgba(18,19,26,0.75); color:#fff;
-  font-family:var(--font-mono); font-size:0.68rem; padding:5px 10px; border-radius:7px;
-}
+.project-media .mock-glyph{ font-family:var(--font-label); color:var(--indigo); font-size:0.8rem; opacity:0.6; }
 .project-body{ padding:26px 26px 24px; display:flex; flex-direction:column; gap:14px; flex:1; }
 .project-body h3{ font-size:1.2rem; }
 .project-body p.desc{ color:var(--ink-soft); font-size:0.94rem; }
 .tech-tags{ display:flex; flex-wrap:wrap; gap:8px; }
 .tech-tag{
-  font-family:var(--font-mono); font-size:0.72rem; color:var(--indigo);
-  background:rgba(5,150,105,0.08); padding:5px 11px; border-radius:99px;
+  font-family:var(--font-label); font-size:0.72rem; color:var(--indigo);
+  background:var(--tint-1); padding:5px 11px; border-radius:99px;
 }
 .project-actions{ display:flex; gap:10px; margin-top:auto; padding-top:6px; flex-wrap:wrap; }
 @media (max-width: 480px){
@@ -652,8 +703,8 @@ section{ padding:120px 0; position:relative; }
   transition: all .25s var(--ease);
 }
 .icon-link:hover{ border-color:var(--indigo); color:var(--indigo); transform:translateY(-2px); }
-.icon-link.primary-link{ background:var(--surface-inverse); color:#fff; border-color:var(--surface-inverse); }
-.icon-link.primary-link:hover{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
+.icon-link.primary-link{ background:var(--surface-inverse); color:var(--on-inverse); border-color:var(--surface-inverse); }
+.icon-link.primary-link:hover{ background:var(--indigo); border-color:var(--indigo); color:var(--on-brand); }
 
 .projects-footer{ text-align:center; margin-top:52px; }
 
@@ -663,7 +714,7 @@ section{ padding:120px 0; position:relative; }
    MODAL — project details
    ============================================ */
 .modal-overlay{
-  position:fixed; inset:0; background:rgba(15,16,26,0.6); backdrop-filter:blur(4px);
+  position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);
   z-index:1200; display:flex; align-items:flex-start; justify-content:center;
   padding:60px 20px; opacity:0; pointer-events:none; transition: opacity .3s var(--ease);
   overflow-y:auto;
@@ -680,7 +731,6 @@ section{ padding:120px 0; position:relative; }
 }
 .modal-overlay.open .modal-box{ transform:translateY(0) scale(1); }
 .modal-media{ aspect-ratio:16/8; background:var(--grad-soft); position:relative; }
-.modal-media .placeholder-tag{ position:absolute; top:14px; left:14px; background:rgba(18,19,26,0.75); color:#fff; font-family:var(--font-mono); font-size:0.68rem; padding:5px 10px; border-radius:7px;}
 .modal-close{
   position:absolute; top:16px; right:16px; width:38px; height:38px; border-radius:50%;
   background:rgba(255,255,255,0.9); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
@@ -691,7 +741,7 @@ section{ padding:120px 0; position:relative; }
 .modal-content .modal-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
 .modal-section{ margin-bottom:22px; }
 .modal-section h4{
-  font-family:var(--font-mono); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;
+  font-family:var(--font-label); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.05em;
   color:var(--teal); margin-bottom:8px;
 }
 .modal-section p, .modal-section li{ color:var(--ink-soft); font-size:0.95rem; }
@@ -715,10 +765,10 @@ section{ padding:120px 0; position:relative; }
   display:flex; align-items:center; justify-content:center; margin-bottom:18px;
 }
 .achieve-card h3{ font-size:1.08rem; margin-bottom:4px; }
-.achieve-card .sub{ font-family:var(--font-mono); font-size:0.76rem; color:var(--teal); margin-bottom:12px; display:block; }
+.achieve-card .sub{ font-family:var(--font-label); font-size:0.76rem; color:var(--teal); margin-bottom:12px; display:block; }
 .achieve-card p{ color:var(--ink-soft); font-size:0.92rem; }
 .achieve-date{
-  display:inline-block; margin-top:16px; font-family:var(--font-mono); font-size:0.72rem;
+  display:inline-block; margin-top:16px; font-family:var(--font-label); font-size:0.72rem;
   color:var(--ink-faint); border-top:1px dashed var(--line); padding-top:12px; width:100%;
 }
 @media (max-width:900px){ .achieve-grid{ grid-template-columns:1fr; } }
@@ -734,15 +784,15 @@ section{ padding:120px 0; position:relative; }
 .edu-item{ position:relative; padding-bottom:8px; }
 .edu-dot{
   position:absolute; left:-38px; top:4px; width:20px; height:20px; border-radius:50%;
-  background:var(--surface); border:3px solid var(--indigo); box-shadow:0 0 0 4px rgba(5,150,105,0.12);
+  background:var(--surface); border:3px solid var(--indigo); box-shadow:0 0 0 4px var(--tint-2);
 }
 .edu-card{
   background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg);
   padding:26px 28px; margin-bottom:10px;
 }
 .edu-card .status{
-  display:inline-block; font-family:var(--font-mono); font-size:0.72rem; color:var(--teal);
-  background:rgba(5,150,105,0.10); padding:4px 11px; border-radius:99px; margin-bottom:12px;
+  display:inline-block; font-family:var(--font-label); font-size:0.72rem; color:var(--teal);
+  background:var(--tint-1); padding:4px 11px; border-radius:99px; margin-bottom:12px;
 }
 .edu-card h3{ font-size:1.2rem; margin-bottom:4px; }
 .edu-card .school{ color:var(--indigo); font-weight:600; font-size:0.96rem; margin-bottom:10px; }
@@ -771,7 +821,7 @@ section{ padding:120px 0; position:relative; }
   background:var(--grad-brand); opacity:0.35; filter:blur(28px);
 }
 .resume-preview{
-  position:relative; background:#13241D; border:1px solid rgba(255,255,255,0.14);
+  position:relative; background:#0A0A0A; border:1px solid rgba(255,255,255,0.14);
   border-radius:var(--r-lg); aspect-ratio:3/4; overflow:hidden;
   box-shadow:0 30px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04) inset;
   display:flex; flex-direction:column;
@@ -782,16 +832,16 @@ section{ padding:120px 0; position:relative; }
   border-bottom:1px solid rgba(255,255,255,0.08); flex-shrink:0;
 }
 .resume-preview-bar .dot{ width:9px; height:9px; border-radius:50%; }
-.resume-preview-bar .dot.r{ background:#FF5F57; } .resume-preview-bar .dot.y{ background:#FEBC2E; } .resume-preview-bar .dot.g{ background:#28C840; }
+.resume-preview-bar .dot.r{ background:#4D4D4D; } .resume-preview-bar .dot.y{ background:#7A7A7A; } .resume-preview-bar .dot.g{ background:#A8A8A8; }
 .resume-preview-bar .fname{
-  margin-left:8px; font-family:var(--font-mono); font-size:0.68rem; color:rgba(255,255,255,0.5);
+  margin-left:8px; font-family:var(--font-label); font-size:0.68rem; color:rgba(255,255,255,0.5);
   background:rgba(255,255,255,0.06); padding:3px 10px; border-radius:99px; flex:1; text-align:center;
 }
 .resume-preview-frame{ position:relative; flex:1; background:#fff; }
 .resume-preview-frame iframe{ width:100%; height:100%; border:0; display:block; }
 .resume-preview-badge{
   position:absolute; bottom:-14px; right:-14px; z-index:2;
-  background:#fff; color:var(--ink); font-family:var(--font-mono); font-size:0.7rem; font-weight:600;
+  background:#fff; color:var(--ink); font-family:var(--font-label); font-size:0.7rem; font-weight:600;
   padding:9px 16px; border-radius:99px; box-shadow:var(--shadow-md);
   display:flex; align-items:center; gap:7px;
 }
@@ -816,7 +866,7 @@ section{ padding:120px 0; position:relative; }
   width:42px; height:42px; border-radius:11px; background:var(--grad-soft); color:var(--indigo);
   display:flex; align-items:center; justify-content:center; flex-shrink:0;
 }
-.contact-info-item .label{ font-size:0.76rem; color:var(--ink-faint); font-family:var(--font-mono); }
+.contact-info-item .label{ font-size:0.76rem; color:var(--ink-faint); font-family:var(--font-label); }
 .contact-info-item .value{ font-weight:600; font-size:0.95rem; word-break:break-all; }
 
 .contact-form{
@@ -842,17 +892,19 @@ section{ padding:120px 0; position:relative; }
   }
 }
 .field input:focus, .field textarea:focus{
-  outline:none; border-color:var(--indigo); box-shadow:0 0 0 4px rgba(5,150,105,0.12); background:var(--white);
+  outline:none; border-color:var(--indigo); box-shadow:0 0 0 4px var(--tint-2); background:var(--white);
 }
 .field.error input, .field.error textarea{ border-color:var(--danger); }
-.field .error-msg{ font-size:0.78rem; color:var(--danger); display:none; }
+.field .error-msg{ font-size:0.78rem; color:var(--ink); font-weight:600; display:none; }
 .field.error .error-msg{ display:block; }
 .field textarea{ resize:vertical; min-height:130px; }
 .form-status{
   margin-top:16px; padding:13px 16px; border-radius:var(--r-sm); font-size:0.9rem; display:none;
 }
 .form-status.show{ display:block; }
-.form-status.success{ background:rgba(31,169,113,0.1); color:var(--success); display:block; }
+/* monochrome feedback states: solid (inverted) = sent, outlined = needs fixing */
+.form-status.success{ background:var(--ink); color:var(--bg); display:block; }
+.form-status.error{ background:var(--bg-alt); color:var(--ink); border:1.5px solid var(--ink); }
 
 @media (max-width:900px){
   .contact-grid{ grid-template-columns:1fr; gap:40px; }
@@ -879,7 +931,7 @@ footer{
 @media (max-width: 400px){
   .footer-links{ flex-direction:column; gap:20px; }
 }
-.footer-col h4{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); margin-bottom:14px; font-family:var(--font-mono); }
+.footer-col h4{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.4); margin-bottom:14px; font-family:var(--font-label); }
 .footer-col a{ display:block; padding:6px 0; font-size:0.9rem; color:rgba(255,255,255,0.72); transition:color .2s; }
 .footer-col a:hover{ color:#fff; }
 .footer-bottom{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.82rem; color:rgba(255,255,255,0.45); }
@@ -913,6 +965,27 @@ footer{
 .visually-hidden{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
   clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ============================================
+   CURSOR — a lerped follower that inverts whatever it passes over
+   ============================================ */
+.cursor-dot{
+  position:fixed; top:0; left:0; z-index:3000;
+  width:22px; height:22px; border-radius:50%;
+  background:#fff;
+  pointer-events:none; opacity:0;
+  mix-blend-mode:exclusion;      /* inverts against light AND dark surfaces */
+  backdrop-filter:contrast(1.4); /* keeps the inversion readable on flat greys */
+  -webkit-backdrop-filter:contrast(1.4);
+  transform:translate3d(-100px,-100px,0);
+  will-change:transform, width, height;
+  transition:opacity .25s var(--ease), border-radius .25s var(--ease);
+}
+.cursor-dot.is-active{ opacity:1; }
+/* no mouse to track, so leave the native cursor alone */
+@media (hover: none), (pointer: coarse){
+  .cursor-dot{ display:none; }
 }
 /* ============================================
    MOBILE RESPONSIVENESS ENHANCEMENTS
@@ -995,6 +1068,7 @@ footer{
 
 <a href="#home" class="skip-link">Skip to main content</a>
 <div id="scroll-progress"></div>
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
 
 <!-- ============================================ NAVIGATION ============================================ -->
 <nav class="navbar" id="navbar">
@@ -1198,54 +1272,53 @@ footer{
 
       <article class="project-card fade-up" data-project="attendance">
         <div class="project-media">
-          <span class="placeholder-tag"></span>
           <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of the Student Attendance Manager dashboard">
             <defs>
-              <linearGradient id="bgAtt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDF7F1"/><stop offset="1" stop-color="#E1F0E7"/></linearGradient>
-              <linearGradient id="brandAtt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#059669"/><stop offset="1" stop-color="#10B981"/></linearGradient>
+              <linearGradient id="bgAtt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EFF6FF"/><stop offset="1" stop-color="#DBEAFE"/></linearGradient>
+              <linearGradient id="brandAtt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#1D4ED8"/></linearGradient>
             </defs>
             <rect width="480" height="300" class="svg-bg" fill="url(#bgAtt)"/>
             <rect x="0" y="0" width="480" height="30" class="svg-window-bar" fill="#ffffff" opacity="0.7"/>
             <circle cx="16" cy="15" r="4" fill="#FF5F57"/><circle cx="30" cy="15" r="4" fill="#FEBC2E"/><circle cx="44" cy="15" r="4" fill="#28C840"/>
             <rect x="150" y="9" width="180" height="12" rx="6" class="svg-window-bar" fill="#ffffff"/>
-            <rect x="24" y="46" width="94" height="228" rx="14" class="svg-panel-dark" fill="#0F1A16"/>
+            <rect x="24" y="46" width="94" height="228" rx="14" class="svg-panel-dark" fill="#0A0A0A"/>
             <rect x="40" y="66" width="62" height="10" rx="5" fill="url(#brandAtt)"/>
-            <rect x="40" y="90" width="62" height="8" rx="4" fill="#2E4D3F"/>
-            <rect x="40" y="108" width="62" height="8" rx="4" fill="#2E4D3F"/>
-            <rect x="40" y="126" width="62" height="8" rx="4" fill="#2E4D3F"/>
-            <rect x="40" y="144" width="62" height="8" rx="4" fill="#2E4D3F"/>
+            <rect x="40" y="90" width="62" height="8" rx="4" fill="#3D3D3D"/>
+            <rect x="40" y="108" width="62" height="8" rx="4" fill="#3D3D3D"/>
+            <rect x="40" y="126" width="62" height="8" rx="4" fill="#3D3D3D"/>
+            <rect x="40" y="144" width="62" height="8" rx="4" fill="#3D3D3D"/>
             <rect x="134" y="46" width="106" height="54" rx="12" class="svg-card" fill="#ffffff"/>
-            <text x="146" y="68" font-family="monospace" font-size="9" fill="#8B8EA0">PRESENT</text>
-            <text x="146" y="88" font-family="monospace" font-size="18" font-weight="700" class="svg-text-ink" fill="#12131A">142</text>
+            <text x="146" y="68" font-size="9" fill="#8A8A8A">PRESENT</text>
+            <text x="146" y="88" font-size="18" font-weight="700" fill="#3B82F6">142</text>
             <rect x="250" y="46" width="106" height="54" rx="12" class="svg-card" fill="#ffffff"/>
-            <text x="262" y="68" font-family="monospace" font-size="9" fill="#8B8EA0">ABSENT</text>
-            <text x="262" y="88" font-family="monospace" font-size="18" font-weight="700" fill="#E0525C">8</text>
+            <text x="262" y="68" font-size="9" fill="#8A8A8A">ABSENT</text>
+            <text x="262" y="88" font-size="18" font-weight="700" fill="#E0525C">8</text>
             <rect x="366" y="46" width="94" height="54" rx="12" class="svg-card" fill="#ffffff"/>
-            <text x="378" y="68" font-family="monospace" font-size="9" fill="#8B8EA0">OD</text>
-            <text x="378" y="88" font-family="monospace" font-size="18" font-weight="700" fill="#0D9488">5</text>
+            <text x="378" y="68" font-size="9" fill="#8A8A8A">OD</text>
+            <text x="378" y="88" font-size="18" font-weight="700" fill="#D97706">5</text>
             <rect x="134" y="112" width="326" height="162" rx="14" class="svg-card" fill="#ffffff"/>
-            <rect x="150" y="128" width="70" height="7" rx="3.5" class="svg-line-soft" fill="#C9CBDD"/>
-            <rect x="380" y="126" width="60" height="14" rx="7" class="svg-chip-bg" fill="#E4EFE9"/>
+            <rect x="150" y="128" width="70" height="7" rx="3.5" class="svg-line-soft" fill="#C9C9C9"/>
+            <rect x="380" y="126" width="60" height="14" rx="7" class="svg-chip-bg" fill="#E9E9E9"/>
             <g>
-              <rect x="150" y="152" width="18" height="18" rx="9" class="svg-badge-green" fill="#EAFBF5"/>
-              <path d="M155 161l3 3 6-6" stroke="#1FA971" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="178" y="155" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#3A3D4D"/>
-              <rect x="178" y="167" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
-              <rect x="392" y="155" width="48" height="16" rx="8" class="svg-badge-green" fill="#EAFBF5"/>
+              <rect x="150" y="152" width="18" height="18" rx="9" class="svg-badge-green" fill="#ECFDF5"/>
+              <path d="M155 161l3 3 6-6" stroke="#059669" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="178" y="155" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#383838"/>
+              <rect x="178" y="167" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
+              <rect x="392" y="155" width="48" height="16" rx="8" class="svg-badge-green" fill="#ECFDF5"/>
             </g>
             <g>
-              <rect x="150" y="187" width="18" height="18" rx="9" class="svg-badge-green" fill="#EAFBF5"/>
-              <path d="M155 196l3 3 6-6" stroke="#1FA971" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="178" y="190" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#3A3D4D"/>
-              <rect x="178" y="202" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
-              <rect x="392" y="190" width="48" height="16" rx="8" class="svg-badge-green" fill="#EAFBF5"/>
+              <rect x="150" y="187" width="18" height="18" rx="9" class="svg-badge-green" fill="#ECFDF5"/>
+              <path d="M155 196l3 3 6-6" stroke="#059669" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="178" y="190" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#383838"/>
+              <rect x="178" y="202" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
+              <rect x="392" y="190" width="48" height="16" rx="8" class="svg-badge-green" fill="#ECFDF5"/>
             </g>
             <g>
-              <rect x="150" y="222" width="18" height="18" rx="9" class="svg-badge-red" fill="#FDEEEF"/>
+              <rect x="150" y="222" width="18" height="18" rx="9" class="svg-badge-red" fill="#FEF2F2"/>
               <path d="M154 226l8 8M162 226l-8 8" stroke="#E0525C" stroke-width="2" stroke-linecap="round"/>
-              <rect x="178" y="225" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#3A3D4D"/>
-              <rect x="178" y="237" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
-              <rect x="392" y="225" width="48" height="16" rx="8" class="svg-badge-red" fill="#FDEEEF"/>
+              <rect x="178" y="225" width="90" height="7" rx="3.5" class="svg-line-strong" fill="#383838"/>
+              <rect x="178" y="237" width="60" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
+              <rect x="392" y="225" width="48" height="16" rx="8" class="svg-badge-red" fill="#FEF2F2"/>
             </g>
           </svg>
         </div>
@@ -1263,11 +1336,10 @@ footer{
 
       <article class="project-card fade-up" style="transition-delay:.08s" data-project="inventory">
         <div class="project-media">
-          <span class="placeholder-tag"></span>
           <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of the Inventory and Billing System dashboard">
             <defs>
-              <linearGradient id="bgInv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E3F5EE" /><stop offset="1" stop-color="#E1F0E7"/></linearGradient>
-              <linearGradient id="barInv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#047857"/></linearGradient>
+              <linearGradient id="bgInv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFBEB" /><stop offset="1" stop-color="#FEF3C7"/></linearGradient>
+              <linearGradient id="barInv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59E0B"/><stop offset="1" stop-color="#D97706"/></linearGradient>
             </defs>
             <rect width="480" height="300" class="svg-bg" fill="url(#bgInv)"/>
             <rect x="0" y="0" width="480" height="30" class="svg-window-bar" fill="#ffffff" opacity="0.7"/>
@@ -1275,8 +1347,8 @@ footer{
             <rect x="150" y="9" width="180" height="12" rx="6" class="svg-window-bar" fill="#ffffff"/>
 
             <rect x="24" y="46" width="230" height="130" rx="14" class="svg-card" fill="#ffffff"/>
-            <rect x="40" y="60" width="90" height="8" rx="4" class="svg-line-strong" fill="#3A3D4D"/>
-            <text x="40" y="88" font-family="monospace" font-size="8" fill="#8B8EA0">WEEKLY SALES</text>
+            <rect x="40" y="60" width="90" height="8" rx="4" class="svg-line-strong" fill="#383838"/>
+            <text x="40" y="88" font-size="8" fill="#8A8A8A">WEEKLY SALES</text>
             <rect x="40" y="110" width="20" height="50" rx="4" fill="url(#barInv)" opacity="0.55"/>
             <rect x="68" y="95" width="20" height="65" rx="4" fill="url(#barInv)" opacity="0.7"/>
             <rect x="96" y="120" width="20" height="40" rx="4" fill="url(#barInv)" opacity="0.55"/>
@@ -1285,29 +1357,29 @@ footer{
             <rect x="180" y="70" width="20" height="90" rx="4" fill="url(#barInv)"/>
             <rect x="208" y="105" width="20" height="55" rx="4" fill="url(#barInv)" opacity="0.6"/>
 
-            <rect x="266" y="46" width="190" height="130" rx="14" fill="#0F1A16"/>
-            <text x="282" y="68" font-family="monospace" font-size="8" fill="#8B8FA8">INVOICE #0231</text>
-            <rect x="282" y="82" width="120" height="7" rx="3.5" fill="#2E4D3F"/>
-            <rect x="282" y="96" width="90" height="6" rx="3" fill="#2E4D3F"/>
-            <line x1="282" y1="114" x2="440" y2="114" stroke="#244034" stroke-width="1"/>
-            <text x="282" y="134" font-family="monospace" font-size="8" fill="#8B8FA8">TOTAL DUE</text>
-            <text x="282" y="156" font-family="monospace" font-size="20" font-weight="700" fill="#5FE3B3">₹8,450</text>
-            <rect x="380" y="140" width="60" height="22" rx="11" fill="#059669"/>
-            <text x="392" y="155" font-family="monospace" font-size="8" fill="#ffffff">PAID</text>
+            <rect x="266" y="46" width="190" height="130" rx="14" fill="#0A0A0A"/>
+            <text x="282" y="68" font-size="8" fill="#8A8A8A">INVOICE #0231</text>
+            <rect x="282" y="82" width="120" height="7" rx="3.5" fill="#3D3D3D"/>
+            <rect x="282" y="96" width="90" height="6" rx="3" fill="#3D3D3D"/>
+            <line x1="282" y1="114" x2="440" y2="114" stroke="#2A2A2A" stroke-width="1"/>
+            <text x="282" y="134" font-size="8" fill="#8A8A8A">TOTAL DUE</text>
+            <text x="282" y="156" font-size="20" font-weight="700" fill="#FFFFFF">₹8,450</text>
+            <rect x="380" y="140" width="60" height="22" rx="11" fill="#047857"/>
+            <text x="392" y="155" font-size="8" fill="#ffffff">PAID</text>
 
             <rect x="24" y="188" width="432" height="86" rx="14" class="svg-card" fill="#ffffff"/>
-            <rect x="40" y="202" width="70" height="7" rx="3.5" class="svg-line-soft" fill="#C9CBDD"/>
+            <rect x="40" y="202" width="70" height="7" rx="3.5" class="svg-line-soft" fill="#C9C9C9"/>
             <g>
-              <rect x="40" y="224" width="26" height="26" rx="7" class="svg-chip-bg" fill="#E4EFE9"/>
-              <rect x="76" y="230" width="120" height="7" rx="3.5" class="svg-line-strong" fill="#3A3D4D"/>
-              <rect x="76" y="242" width="70" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
-              <text x="226" y="240" font-family="monospace" font-size="9" class="svg-text-ink" fill="#12131A" text-anchor="end">₹1,200</text>
+              <rect x="40" y="224" width="26" height="26" rx="7" class="svg-chip-bg" fill="#E9E9E9"/>
+              <rect x="76" y="230" width="120" height="7" rx="3.5" class="svg-line-strong" fill="#383838"/>
+              <rect x="76" y="242" width="70" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
+              <text x="226" y="240" font-size="9" class="svg-text-ink" fill="#0A0A0A" text-anchor="end">₹1,200</text>
             </g>
             <g>
-              <rect x="240" y="224" width="26" height="26" rx="7" class="svg-badge-green" fill="#EAFBF5"/>
-              <rect x="276" y="230" width="120" height="7" rx="3.5" class="svg-line-strong" fill="#3A3D4D"/>
-              <rect x="276" y="242" width="70" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
-              <text x="440" y="240" font-family="monospace" font-size="9" class="svg-text-ink" fill="#12131A" text-anchor="end">₹640</text>
+              <rect x="240" y="224" width="26" height="26" rx="7" class="svg-badge-green" fill="#ECFDF5"/>
+              <rect x="276" y="230" width="120" height="7" rx="3.5" class="svg-line-strong" fill="#383838"/>
+              <rect x="276" y="242" width="70" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
+              <text x="440" y="240" font-size="9" class="svg-text-ink" fill="#0A0A0A" text-anchor="end">₹640</text>
             </g>
           </svg>
         </div>
@@ -1325,17 +1397,16 @@ footer{
 
       <article class="project-card fade-up" style="transition-delay:.08s" data-project="quran">
         <div class="project-media">
-          <span class="placeholder-tag"></span>
           <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of the Islamic Learning App interface">
             <defs>
-              <linearGradient id="bgQuran" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDF7F1"/><stop offset="1" stop-color="#E3F5EE"/></linearGradient>
+              <linearGradient id="bgQuran" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ECFDF5"/><stop offset="1" stop-color="#D1FAE5"/></linearGradient>
               <linearGradient id="brandQuran" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#047857"/></linearGradient>
             </defs>
             <rect width="480" height="300" class="svg-bg" fill="url(#bgQuran)"/>
 
-            <rect x="185" y="24" width="110" height="252" rx="26" class="svg-panel-dark" fill="#0F1A16"/>
+            <rect x="185" y="24" width="110" height="252" rx="26" class="svg-panel-dark" fill="#0A0A0A"/>
             <rect x="193" y="40" width="94" height="220" rx="14" class="svg-card" fill="#ffffff"/>
-            <rect x="222" y="30" width="36" height="6" rx="3" fill="#244034"/>
+            <rect x="222" y="30" width="36" height="6" rx="3" fill="#2A2A2A"/>
 
             <rect x="193" y="40" width="94" height="46" rx="14" fill="url(#brandQuran)"/>
             <circle cx="214" cy="63" r="9" fill="#ffffff" opacity="0.9"/>
@@ -1343,21 +1414,21 @@ footer{
             <rect x="232" y="57" width="42" height="6" rx="3" fill="#ffffff"/>
             <rect x="232" y="68" width="30" height="5" rx="2.5" fill="#ffffff" opacity="0.75"/>
 
-            <rect x="205" y="96" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F3FA"/>
-            <rect x="213" y="104" width="46" height="6" rx="3" fill="#8B8EA0"/>
-            <rect x="213" y="114" width="54" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
+            <rect x="205" y="96" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F2F2"/>
+            <rect x="213" y="104" width="46" height="6" rx="3" fill="#8A8A8A"/>
+            <rect x="213" y="114" width="54" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
 
-            <rect x="205" y="136" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F3FA"/>
-            <rect x="213" y="144" width="50" height="6" rx="3" fill="#8B8EA0"/>
-            <rect x="213" y="154" width="40" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
+            <rect x="205" y="136" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F2F2"/>
+            <rect x="213" y="144" width="50" height="6" rx="3" fill="#8A8A8A"/>
+            <rect x="213" y="154" width="40" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
 
-            <rect x="205" y="176" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F3FA"/>
-            <rect x="213" y="184" width="42" height="6" rx="3" fill="#8B8EA0"/>
-            <rect x="213" y="194" width="48" height="6" rx="3" class="svg-line-soft" fill="#C9CBDD"/>
+            <rect x="205" y="176" width="70" height="34" rx="9" class="svg-chip-bg" fill="#F2F2F2"/>
+            <rect x="213" y="184" width="42" height="6" rx="3" fill="#8A8A8A"/>
+            <rect x="213" y="194" width="48" height="6" rx="3" class="svg-line-soft" fill="#C9C9C9"/>
 
-            <rect x="205" y="222" width="70" height="8" rx="4" class="svg-line-soft" fill="#E4E6F0"/>
+            <rect x="205" y="222" width="70" height="8" rx="4" class="svg-line-soft" fill="#E6E6E6"/>
             <rect x="205" y="222" width="46" height="8" rx="4" fill="url(#brandQuran)"/>
-            <text x="205" y="244" font-family="monospace" font-size="7" fill="#8B8EA0">65% COMPLETE</text>
+            <text x="205" y="244" font-size="7" fill="#8A8A8A">65% COMPLETE</text>
 
             <g opacity="0.9">
               <circle cx="90" cy="90" r="34" class="svg-card" fill="#ffffff"/>
@@ -1369,9 +1440,9 @@ footer{
 
             <g opacity="0.9">
               <rect x="340" y="70" width="90" height="60" rx="12" class="svg-card" fill="#ffffff"/>
-              <rect x="354" y="84" width="62" height="7" rx="3.5" class="svg-line-soft" fill="#C9CBDD"/>
-              <rect x="354" y="98" width="44" height="7" rx="3.5" class="svg-line-soft" fill="#C9CBDD"/>
-              <rect x="354" y="112" width="50" height="7" rx="3.5" class="svg-line-soft" fill="#C9CBDD"/>
+              <rect x="354" y="84" width="62" height="7" rx="3.5" class="svg-line-soft" fill="#C9C9C9"/>
+              <rect x="354" y="98" width="44" height="7" rx="3.5" class="svg-line-soft" fill="#C9C9C9"/>
+              <rect x="354" y="112" width="50" height="7" rx="3.5" class="svg-line-soft" fill="#C9C9C9"/>
             </g>
           </svg>
         </div>
@@ -1389,28 +1460,27 @@ footer{
 
       <article class="project-card fade-up" style="transition-delay:.16s" data-project="outagemap">
         <div class="project-media">
-          <span class="placeholder-tag">Live App</span>
           <svg viewBox="0 0 480 300" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of OutageMap interface">
             <defs>
-              <linearGradient id="bgOutage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EDF7F1"/><stop offset="1" stop-color="#E3F5EE"/></linearGradient>
-              <linearGradient id="brandOutage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#047857"/></linearGradient>
+              <linearGradient id="bgOutage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EEF2FF"/><stop offset="1" stop-color="#E0E7FF"/></linearGradient>
+              <linearGradient id="brandOutage" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#4F46E5"/></linearGradient>
             </defs>
             <rect width="480" height="300" class="svg-bg" fill="url(#bgOutage)"/>
             <rect x="0" y="0" width="480" height="30" class="svg-window-bar" fill="#ffffff" opacity="0.7"/>
             <circle cx="16" cy="15" r="4" fill="#FF5F57"/><circle cx="30" cy="15" r="4" fill="#FEBC2E"/><circle cx="44" cy="15" r="4" fill="#28C840"/>
-            <rect x="24" y="46" width="210" height="208" rx="16" class="svg-panel-dark" fill="#0F1A16"/>
+            <rect x="24" y="46" width="210" height="208" rx="16" class="svg-panel-dark" fill="#0A0A0A"/>
             <rect x="40" y="66" width="178" height="24" rx="12" fill="url(#brandOutage)"/>
-            <text x="52" y="82" font-family="monospace" font-size="12" fill="#fff" font-weight="700">OUTAGEMAP</text>
+            <text x="52" y="82" font-size="12" fill="#fff" font-weight="700">OUTAGEMAP</text>
             <rect x="40" y="104" width="178" height="120" rx="10" class="svg-card" fill="#ffffff"/>
-            <rect x="56" y="122" width="100" height="8" rx="4" fill="#C9CBDD"/>
-            <rect x="56" y="138" width="70" height="8" rx="4" fill="#C9CBDD"/>
-            <rect x="56" y="154" width="120" height="8" rx="4" fill="#C9CBDD"/>
-            <rect x="56" y="170" width="90" height="8" rx="4" fill="#C9CBDD"/>
-            <rect x="56" y="186" width="60" height="8" rx="4" fill="#C9CBDD"/>
+            <rect x="56" y="122" width="100" height="8" rx="4" fill="#C9C9C9"/>
+            <rect x="56" y="138" width="70" height="8" rx="4" fill="#C9C9C9"/>
+            <rect x="56" y="154" width="120" height="8" rx="4" fill="#C9C9C9"/>
+            <rect x="56" y="170" width="90" height="8" rx="4" fill="#C9C9C9"/>
+            <rect x="56" y="186" width="60" height="8" rx="4" fill="#C9C9C9"/>
             <rect x="260" y="66" width="190" height="60" rx="12" class="svg-card" fill="#ffffff"/>
-            <text x="278" y="88" font-family="monospace" font-size="8" fill="#8B8EA0">STATUS</text>
-            <rect x="278" y="100" width="60" height="14" rx="7" fill="#1FA971" opacity="0.15"/>
-            <text x="288" y="112" font-family="monospace" font-size="9" fill="#1FA971" font-weight="600">Online</text>
+            <text x="278" y="88" font-size="8" fill="#8A8A8A">STATUS</text>
+            <rect x="278" y="100" width="60" height="14" rx="7" fill="#10B981" opacity="0.15"/>
+            <text x="288" y="112" font-size="9" class="svg-status-text" fill="#047857" font-weight="600">Online</text>
           </svg>
         </div>
         <div class="project-body">
@@ -1612,7 +1682,6 @@ footer{
   <div class="modal-box">
     <div class="modal-media">
       <div id="modal-media-visual" style="width:100%; height:100%;"></div>
-      <span class="placeholder-tag"></span>
       <button class="modal-close" id="modal-close" aria-label="Close project details">✕</button>
     </div>
     <div class="modal-content" id="modal-content"><!-- injected --></div>
@@ -1702,38 +1771,13 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
   if(!stored){ applyTheme(e.matches ? 'dark' : 'light'); }
 });
 
-/* TEMPORARY debug hook for automated theme verification (remove after testing) */
-(function(){
-  const p = new URLSearchParams(location.search);
-  const t = p.get('theme');
-  if(t === 'dark' || t === 'light'){ document.documentElement.setAttribute('data-theme', t); }
-  if(p.has('debugtheme')){
-    window.addEventListener('load', () => {
-      const gs = (sel, prop) => { const el = document.querySelector(sel); return el ? getComputedStyle(el)[prop] : 'MISSING'; }; 
-      const svgCard = document.querySelector('.project-media svg .svg-card');
-      const info = [
-        'THEME_DEBUG',
-        'attr=' + document.documentElement.getAttribute('data-theme'),
-        'bodyBg=' + gs('body','backgroundColor'),
-        'bodyColor=' + gs('body','color'),
-        'surface=' + gs('.skill-cat','backgroundColor'),
-        'surfaceBorder=' + gs('.skill-cat','borderTopColor'),
-        'footerBg=' + gs('footer','backgroundColor'),
-        'resumeBg=' + gs('.resume-section','backgroundColor'),
-        'primaryLinkBg=' + gs('.icon-link.primary-link','backgroundColor'),
-        'primaryLinkColor=' + gs('.icon-link.primary-link','color'),
-        'svgCardFill=' + (svgCard ? getComputedStyle(svgCard).fill : 'MISSING'),
-        'svgStrongFill=' + (document.querySelector('.project-media svg .svg-line-strong') ? getComputedStyle(document.querySelector('.project-media svg .svg-line-strong')).fill : 'MISSING'),
-        'toggleVisible=' + gs('#theme-toggle','display'),
-        'toggleColor=' + gs('#theme-toggle','color'),
-        'inputBg=' + gs('#name','backgroundColor'),
-        'inkSoft=' + gs('.hero-desc','color')
-      ].join(' | ');
-      const d = document.createElement('div'); d.id = 'theme-debug'; d.textContent = info;
-      document.body.appendChild(d);
-    });
-  }
-})();
+
+
+
+
+
+
+
 
 /* ============================================
    NAV: scroll state, active link, mobile menu
@@ -1834,10 +1878,10 @@ document.querySelectorAll('.mini-stat .num').forEach(el => counterObserver.obser
    ============================================ */
 const codeLines = [
   { k:'const', rest: ' developer = {' },
-  { indent:1, key:'name', val:"'Fahim Hassan'" },
-  { indent:1, key:'role', val:"'CSE Student'" },
-  { indent:1, key:'stack', val:"['React', 'JS', 'C++']" },
-  { indent:1, key:'learning', val:"true" },
+  { indent:1, key:'name', val:"'Fahim Hassan'", cls:'c-str' },
+  { indent:1, key:'role', val:"'CSE Student'", cls:'c-str' },
+  { indent:1, key:'stack', val:"['React', 'JS', 'C++']", cls:'c-str' },
+  { indent:1, key:'learning', val:"true", cls:'c-bool' },
   { raw: '};' },
   { blank:true },
   { fn:'function', name:'buildSomething', rest:'() {' },
@@ -1856,8 +1900,8 @@ function renderCodeHTML(){
     if(line.raw){ html += line.raw + '<br>'; return; }
     if(line.fn){ html += '<span class="c-key">' + line.fn + '</span> <span class="c-fn">' + line.name + '</span>' + line.rest + '<br>'; return; }
     if(line.ret){ html += pad + '<span class="c-key">return</span> <span class="c-str">' + line.val + '</span>;<br>'; return; }
-    if(line.k){ html += '<span class="c-key">' + line.k + '</span> developer' + line.rest + '<br>'; return; }
-    if(line.key){ html += pad + line.key + ': <span class="c-str">' + line.val + '</span>,<br>'; return; }
+    if(line.k){ html += '<span class="c-key">' + line.k + '</span>' + line.rest + '<br>'; return; }
+    if(line.key){ html += pad + '<span class="c-prop">' + line.key + '</span>: <span class="' + (line.cls || 'c-str') + '">' + line.val + '</span>,<br>'; return; }
   });
   return html;
 }
@@ -1875,7 +1919,7 @@ function renderCodeHTML(){
     if(l.raw) return l.raw;
     if(l.fn) return l.fn + ' ' + l.name + l.rest;
     if(l.ret) return (l.indent?'  ':'') + 'return ' + l.val + ';';
-    if(l.k) return l.k + ' developer' + l.rest;
+    if(l.k) return l.k + l.rest;
     if(l.key) return (l.indent?'  ':'') + l.key + ': ' + l.val + ',';
     return '';
   }).join('\n');
@@ -1969,9 +2013,9 @@ form.addEventListener('submit', (e) => {
   setError('field-message', !message); if(!message) valid = false;
 
   if(!valid){
-    status.className = 'form-status show';
-    status.style.background = 'rgba(224,82,92,0.1)';
-    status.style.color = 'var(--danger)';
+    // states are styled in CSS (.form-status.error / .success) so no colour
+    // literals live in JS — they follow the theme automatically.
+    status.className = 'form-status show error';
     status.textContent = 'Please fix the highlighted fields above.';
     return;
   }
@@ -1984,6 +2028,121 @@ form.addEventListener('submit', (e) => {
   status.textContent = "Opening your email app to send this message — thanks for reaching out!";
   form.reset();
 });
+
+/* ============================================
+   CURSOR — lerped follower with magnetic snap
+   ============================================ */
+(function initCursor(){
+  const dot = document.getElementById('cursor-dot');
+  if(!dot) return;
+  // Only for a real mouse: touch devices keep the native cursor.
+  if(!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  // Elements the cursor snaps onto and leans toward. Buttons expand the
+  // cursor; text links and embedded SVGs stay untouched.
+  const MAGNET = '.logo, .nav-links a, .theme-toggle, .social-btn, .project-card, .btn';
+  // Lean the element toward the pointer, but never on link/text/email elements.
+  // Lean the element toward the pointer, but never on link/text/email elements.
+  const LEAN = '.btn, .theme-toggle';
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LERP = reduce ? 1 : 0.2;   // 1 = track instantly, no trailing motion
+  const SIZE = 22;                 // resting diameter, must match .cursor-dot
+  const PAD = 10;                  // breathing room around a hovered element
+  const PULL = 0.22;               // how far a hovered element leans toward the pointer
+  const VR = reduce ? 0 : 0.004;   // velocity → squash / stretch
+
+  let px = innerWidth / 2, py = innerHeight / 2;  // pointer
+  let x = px, y = py, lx = x, ly = y;             // cursor position + last frame
+  let w = SIZE, h = SIZE;
+  let active = null, rect = null, radius = '50%';
+  const pulls = new Map();                        // element → {x, y, tx, ty}
+
+  document.addEventListener('pointermove', (e) => {
+    if(e.pointerType !== 'mouse') return;
+    px = e.clientX; py = e.clientY;
+    dot.classList.add('is-active');
+    const p = active ? pulls.get(active) : null;
+    if(p && rect){
+      p.tx = (e.clientX - (rect.left + rect.width / 2)) * PULL;
+      p.ty = (e.clientY - (rect.top + rect.height / 2)) * PULL;
+    }
+  });
+
+  // Delegated, so it also covers elements injected later (modal buttons).
+  document.addEventListener('pointerover', (e) => {
+    const el = e.target.closest ? e.target.closest(MAGNET) : null;
+    if(!el || el === active) return;
+    // Only treat the element as a magnet if it is draggable (a button/theme
+    // toggle). Text links and embedded SVGs never expand the cursor or lean.
+    if(!LEAN || !el.closest(LEAN)){
+      active = null; rect = null; pulls.delete(el);
+      return;
+    }
+    active = el;
+    rect = el.getBoundingClientRect();
+    radius = window.getComputedStyle(el).borderRadius || '50%';
+    if(!pulls.has(el)) pulls.set(el, { x:0, y:0, tx:0, ty:0 });
+  });
+
+  document.addEventListener('pointerout', (e) => {
+    if(!active) return;
+    if(e.relatedTarget && active.contains(e.relatedTarget)) return;  // still inside
+    const p = pulls.get(active);
+    if(p){ p.tx = 0; p.ty = 0; }
+    active = null; rect = null; radius = '50%';
+  });
+
+  document.addEventListener('pointerenter', () => dot.classList.add('is-active'));
+  document.addEventListener('pointerleave', () => dot.classList.remove('is-active'));
+
+  // The element's rect is cached on hover; refresh it if the page moves under
+  // the cursor, otherwise the snap would point at where the element used to be.
+  const refresh = () => { if(active) rect = active.getBoundingClientRect(); };
+  window.addEventListener('scroll', refresh, { passive:true });
+  window.addEventListener('resize', refresh);
+
+  let lastW = 0, lastH = 0, lastT = '';
+  function frame(){
+    const tx = (active && rect) ? rect.left + rect.width / 2 : px;
+    const ty = (active && rect) ? rect.top + rect.height / 2 : py;
+    const tw = (active && rect) ? rect.width + PAD * 2 : SIZE;
+    const th = (active && rect) ? rect.height + PAD * 2 : SIZE;
+
+    x += (tx - x) * LERP;  y += (ty - y) * LERP;
+    w += (tw - w) * LERP;  h += (th - h) * LERP;
+
+    const dx = x - lx, dy = y - ly;  lx = x; ly = y;
+    const speed = Math.sqrt(dx * dx + dy * dy);
+    const stretch = 1 + Math.min(speed * VR, 0.8);
+    const squash  = 1 - Math.min(speed * VR * 0.5, 0.35);
+    const rotate = (reduce || active) ? 0 : Math.atan2(dy, dx) * (180 / Math.PI);
+
+    // Only touch the DOM when a value actually changed — this runs every frame.
+    const t = 'translate3d(' + (x - w / 2).toFixed(1) + 'px,' + (y - h / 2).toFixed(1) + 'px,0)'
+      + ' rotate(' + rotate.toFixed(1) + 'deg) scale(' + stretch.toFixed(3) + ',' + squash.toFixed(3) + ')';
+    if(t !== lastT){ dot.style.transform = t; lastT = t; }
+    if(Math.abs(w - lastW) > 0.5){ dot.style.width = w + 'px'; lastW = w; }
+    if(Math.abs(h - lastH) > 0.5){ dot.style.height = h + 'px'; lastH = h; }
+    if(dot.style.borderRadius !== radius) dot.style.borderRadius = radius;
+
+    // Magnetic lean on the element itself, driven by the `translate` property so
+    // it composes with whatever hover `transform` the element already has.
+    pulls.forEach((p, el) => {
+      p.x += (p.tx - p.x) * 0.12;
+      p.y += (p.ty - p.y) * 0.12;
+      if(p.tx === 0 && p.ty === 0 && Math.abs(p.x) < 0.1 && Math.abs(p.y) < 0.1){
+        if(el !== active){ el.style.translate = ''; pulls.delete(el); }
+        return;
+      }
+      // Only lean real buttons (not links or embedded SVGs).
+      if(el.closest(LEAN)) el.style.translate = p.x.toFixed(1) + 'px ' + p.y.toFixed(1) + 'px';
+    });
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
